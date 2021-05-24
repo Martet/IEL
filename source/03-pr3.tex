@@ -1,0 +1,122 @@
+\section{Příklad 3}
+% Jako parametr zadejte skupinu (A-H)
+\tretiZadani{C}
+
+\textbf{Krok 1:} Převedeme napěťový zdroj U na proudový zdroj I\textsubscript{3} a označíme uzly 1, 2 a 3, které budeme zkoumat.
+
+\[ I_{3} = \frac{U}{R_{1}} = \frac{110}{44} = 2.5A \]
+
+\begin{figure}[H]
+\centering
+\label{fig:3_1}
+\begin{circuitikz} \draw
+(0,3) to[current source, v_=$I_{3}$] (0,0)
+(0,3) to[short] (3,3)
+node[label=$1$]{}
+to[R, l^=$R_{2}$, i^=$I{R2}$, v_=$U_{R2}$] (3,0)
+(1,3) to[R, l^=$R_{1}$, *-*] (1,0)
+(0,0) to[short, -*] (3,0)
+(3,3) to[R, l_=$R_{3}$, *-*] (6,3)
+node[label=$2$]{}
+to[short] (8,3)
+to[current source, v_=$I_{1}$] (8,0)
+to[short, -*] (6,0)
+node[label=30:$3$]{}
+to[R, l_=$R_{5}$] (6,3)
+(6,0) to[short] (6,-2)
+to[current source, v_=$I_{2}$] (3,-2)
+to[short, -*] (3,0)
+to[R, l_=$R_{4}$] (6,0)
+;
+\end{circuitikz}
+\end{figure}
+
+\textbf{Krok 2:} Převedeme odpory na rezistivity, vytvoříme a spočteme soustavu rovnic pro uzly:
+
+\[ G = \frac{1}{R} \]
+
+\[ \begin{cases} 
+I_{3} - I_{R1} - I_{R2} + I_{R3} = 0\\
+I_{1} - I_{R5} - I_{R3} = 0\\
+I_{2} - I_{1} + I_{R5} - I_{R4} = 0 
+\end{cases} \]
+
+\[ \begin{cases} 
+-G_{1} U_{A} - G_{2} U_{A} + G_{3}(U_{B} - U_{A}) = -I_{3}\\
+-G_{5}(U_{B} - U_{C}) - G_{3}(U_{B} - U_{A}) = -I_{1}\\
+G_{5}(U_{B} - U_{C}) - G_{4} U_{C} = I_{1} - I_{2}
+\end{cases} \]
+
+\[ \begin{cases} 
+U_{A}(G_{1} + G_{2} + G_{3}) + U_{B}(-G_{3}) = I_{3}\\
+U_{A}(G_{3}) + U_{B}(-G_{3} - G_{5}) + U_{C}(G_{5}) = -I_{1}\\
+U_{B}(G_{5}) + U_{C}(-G_{4} - G_{5}) = I_{1} - I_{2}
+\end{cases} \]
+
+Přepíšeme do matic:
+
+\[ \begin{bmatrix}
+G_{1} + G_{2} + G_{3} & -G_{3} & 0\\
+G_{3} & -G_{3} - G_{5} & G_{5}\\
+0 & G_{5} & -G_{4} - G_{5}
+\end{bmatrix} \cdot 
+\begin{bmatrix}
+U_{A} \\ U_{B} \\ U_{C}
+\end{bmatrix} =
+\begin{bmatrix}
+I_{3} \\ -I_{1} \\ I_{1} - I_{2}
+\end{bmatrix}
+\]
+
+\[ \begin{bmatrix}
+\frac{1}{44} + \frac{1}{31} + \frac{1}{56} & -\frac{1}{56} & 0\\
+\frac{1}{56} & -\frac{1}{56} - \frac{1}{30} & \frac{1}{30}\\
+0 & \frac{1}{30} & -\frac{1}{20} - \frac{1}{30}
+\end{bmatrix} \cdot 
+\begin{bmatrix}
+U_{A} \\ U_{B} \\ U_{C}
+\end{bmatrix} =
+\begin{bmatrix}
+2,5 \\ -0,85 \\ 0,85 - 0,75
+\end{bmatrix}
+\]
+
+\[ \begin{bmatrix}
+\frac{1391}{19096} & -\frac{1}{56} & 0\\
+\frac{1}{56} & -\frac{43}{840} & \frac{1}{30}\\
+0 & \frac{1}{30} & -\frac{1}{12}
+\end{bmatrix} \cdot 
+\begin{bmatrix}
+U_{A} \\ U_{B} \\ U_{C}
+\end{bmatrix} =
+\begin{bmatrix}
+2,5 \\ -0,85 \\ 0,1
+\end{bmatrix}
+\]
+
+Sarrusovým pravidlem spočítáme determinanty:
+
+\[ \Delta = \begin{vmatrix} 
+\frac{1391}{19096} & -\frac{1}{56} & 0\\
+\frac{1}{56} & -\frac{43}{840} & \frac{1}{30}\\
+0 & \frac{1}{30} & -\frac{1}{12}
+\end{vmatrix} =
+\left(\frac{1391}{19096} \cdot -\frac{43}{840} \cdot -\frac{1}{12}\right) - \left(\frac{1}{30} \cdot \frac{1}{30} \cdot \frac{1391}{19096}\right) - \left(-\frac{1}{12} \cdot -\frac{1}{56} \cdot \frac{1}{56}\right) = \frac{4657}{22915200}
+\]
+
+\[ \Delta_{1} = \begin{vmatrix} 
+2,5 & -\frac{1}{56} & 0\\
+-0,85 & -\frac{43}{840} & \frac{1}{30}\\
+0,1 & \frac{1}{30} & -\frac{1}{12}
+\end{vmatrix} =
+\left(2,5 \cdot -\frac{43}{840} \cdot -\frac{1}{12}\right) + \left( 0,1 \cdot -\frac{1}{56} \cdot \frac{1}{30} \right) - \left(\frac{1}{30} \cdot \frac{1}{30} \cdot 2,5\right) - \]
+\[ -\left(-\frac{1}{12} \cdot -\frac{1}{56} \cdot -0,85\right) = \frac{611}{67200}
+\]
+
+Použitím Cramerova pravidla vypočítáme U\textsubscript{A}, které se rovná U\textsubscript{R2}:
+
+\[ U_{R2} = U_{A} = \frac{\Delta_{1}}{\Delta} = \frac{\frac{611}{67200}}{\frac{4657}{22915200}} = 44,7393V \]
+
+Vypočítáme I\textsubscript{R2}:
+
+\[ I_{R2} = \frac{U_{R2}}{R_{2}} = \frac{44,7393}{31} = 1,4432A\]

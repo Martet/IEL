@@ -1,0 +1,109 @@
+\section{Příklad 4}
+% Jako parametr zadejte skupinu (A-H)
+\ctvrtyZadani{H}
+
+\textbf{Krok 1:} Vypočítáme úhlovou rychlost, impedance cívek a kondenzátorů:
+
+\[ \omega = 2\pi f = 2\pi 95 = 190\pi \]
+\[ Z_{C1} = -\frac{1}{j\omega C_{1}} = -\frac{1}{j 190 \pi 155\cdot 10^{-6}} = -j10,8084851\Omega \]
+\[ Z_{C2} = -\frac{1}{j\omega C_{2}} = -\frac{1}{j 190 \pi 70\cdot 10^{-6}} = -j23,93307415\Omega \]
+\[ Z_{L1} = j\omega L_{1} = j190 \cdot \pi \cdot 0,16 = j95,504417\Omega \]
+\[ Z_{L2} = j\omega L_{2} = j190 \cdot \pi \cdot 0,075 = j44,767695\Omega \]
+
+\textbf{Krok 2:} Sestavíme rovnice pro smyčky A, B a C:
+
+\begin{figure}[H]
+\centering
+\label{fig:4_1}
+\begin{circuitikz} \draw
+to[cute inductor, l_=$L_{1}$, -*] (3,0)
+to[capacitor, l_=$C_{2}$] (6,0)
+(6,3) to[vsource, v_=$U_{2}$, -*] (6,0)
+(6,3) to[short] (6,6)
+(3,6) to[vsource, v_=$U_{1}$] (6,6)
+(3,6) to[short] (0,6)
+to[R, l_=$R_{1}$, -*] (0,3)
+to[short] (0,0)
+(0,3) to[capacitor, l_=$C_{1}$, -*] (3,3)
+to[R, l_=$R_{2}$] (3,0)
+(6,3) to[cute inductor, l^=$L_{2}$, i_=$I_{L2}$, v_=$U_{L2}$] (3,3)
+[thick, ->] (2,5) arc(30:-260:0.8);
+\node[] at (1.25,4.6)   (a) {$I_{A}$};
+\draw [thick, ->] (2,2) arc(30:-260:0.8);
+\node[] at (1.25,1.6)   (b) {$I_{B}$};
+\draw [thick, ->] (4.8,2) arc(30:-260:0.8);
+\node[] at (4.1,1.6)   (c) {$I_{C}$};
+\end{circuitikz}
+\end{figure}
+
+\[ \begin{cases}
+I_{A}(R_{1} + Z_{L2} + Z_{C1}) + I_{B}(-Z_{C1}) + I_{C}(-Z_{L2}) = -U_{1}\\
+I_{B}(Z_{C1} + R_{2} + Z_{L1}) + I_{A}(-Z_{C1}) + I_{C}(-R_{2}) = 0\\
+I_{C}(Z_{L2} + Z_{C2} + R_{2}) + I_{A}(-Z_{L2}) + I_{B}(-R_{2}) = -U_{2}
+\end{cases} \]
+
+Přepíšeme rovnice do matice a Sarrusovým pravidlem spočítáme determinanty:
+
+\[ \begin{bmatrix}
+R_{1} + Z_{L2} + Z_{C1} & -Z_{C1} & -Z_{L2}\\
+-Z_{C1} & Z_{C1} + R_{2} + Z_{L1} & -R_{2}\\
+-Z_{L2} & -R_{2} & Z_{L2} + Z_{C2} + R_{2}
+\end{bmatrix} \cdot \begin{bmatrix}
+I_{A} \\ I_{B} \\ I_{C}
+\end{bmatrix} = \begin{bmatrix}
+-U_{1} \\ 0 \\ -U_{2}
+\end{bmatrix} \]
+
+\[ \begin{bmatrix}
+10+33,9592099j & j10,8084851 & -j44,767695\\
+j10,8084851 & 10 + 84,6959319j & -10\\
+-j44,767695 & -10 & 10 + 20,83462085j
+\end{bmatrix} \cdot \begin{bmatrix}
+I_{A} \\ I_{B} \\ I_{C}
+\end{bmatrix} = \begin{bmatrix}
+-65 \\ 0 \\ -60
+\end{bmatrix} \]
+
+\[ \Delta =
+\begin{vmatrix}
+10+33,9592099j & j10,8084851 & -j44,767695\\
+j10,8084851 & 10 + 84,6959319j & -10\\
+-j44,767695 & -10 & 10 + 20,83462085j
+\end{vmatrix} = -41951,13883 + 122805,40143j
+\]
+
+\[ \Delta_{1} =
+\begin{vmatrix}
+-65 & j10,8084851 & -j44,767695\\
+0 & 10 + 84,6959319j & -10\\
+-60 & -10 & 10 + 20,83462085j
+\end{vmatrix} = 342197,99468-88970,38522j
+\]
+
+\[ \Delta_{3} =
+\begin{vmatrix}
+10+33,9592099j & j10,8084851 & -65\\
+j10,8084851 & 10 + 84,6959319j & 0\\
+-j44,767695 & -10 & -60
+\end{vmatrix} =  406019,72179-93266,57151j
+\]
+
+Cramerovým pravidlem spočteme proudy I\textsubscript{A} a I\textsubscript{C}:
+
+\[ I_{A} = \frac{\Delta_{1}}{\Delta} = \frac{342197,99468-88970,38522j}{-41951,13883 + 122805,40143j} = -1,50119-2,27368jA \]
+
+\[ I_{C} = \frac{\Delta_{3}}{\Delta} = \frac{406019,72179-93266,57151j}{-41951,13883 + 122805,40143j} = -1,69149-2,72837jA \]
+
+Spočteme proud procházející cívkou I\textsubscript{L2}:
+
+\[ I_{L2} = I_{C} - I_{A} = (-1,69149-2,72837j) - (-1,50119-2,27368j) = -0,1903-0,45469jA \]
+
+Pomocí ohmova zákona spočítáme napětí U\textsubscript{L2}:
+
+\[ U_{L2} = I_{L2} \cdot Z_{L2} = (-0,1903-0,45469j) \cdot 44,767695j = 20,35542-8,51929jV  \]
+
+Dopočítáme |U\textsubscript{L2}| a \(\varphi_{L2}\):
+
+\[ \lvert U_{L2} \rvert = \sqrt{20,35542^{2} + (-8,51929)^{2}} = 22,0663V\]
+
+\[ \omega_{L2} = \arctan{\frac{-8,51929}{20,35542}} = -0,396375 rad\]

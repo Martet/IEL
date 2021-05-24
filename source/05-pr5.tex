@@ -1,0 +1,56 @@
+\section{Příklad 5}
+% Jako parametr zadejte skupinu (A-H)
+\patyZadani{C}
+
+\textbf{Krok 1:} Sestavíme diferenciální rovnici pro cívku a dosadíme do ní hodnoty:
+
+\[ i_{L}' = \frac{U_{L}}{L} \]
+
+Z II. Kirchhoffova zákona vyjádříme napětí na cívce:
+\[ U_{R} + U_{L} - U = 0 \]
+\[ U_{L} = U - U_{R} \]
+
+Dosadíme napětí do diferenciální rovnice:
+\[ i_{L}' = \frac{U - U_{R}}{L} \]
+\[ i_{L}' = \frac{U - R i_{L}}{L} \]
+\[ L i_{L}' + R i_{L} = U \]
+\[ 5 \cdot i_{L}' + 30 \cdot i_{L}  = 35 \]
+
+\textbf{Krok 2:} Vypočteme charakteristickou rovnici, zjistíme očekávaný tvar rovnice a ten dosadíme do původní diferenciální rovnice:
+
+\[ 5\lambda + 30 = 0 \]
+\[ \lambda = -\frac{30}{5} = -6 \]
+
+Očekávaný tvar rovnice:
+
+\[ i_{L}(t) = C(t) \cdot e^{\lambda t} \]
+\[ i_{L}(t) = C(t) \cdot e^{-6 t} \]
+
+Zderivujeme:
+
+\[ i_{L}(t)' = C(t)' \cdot e^{-6 t} - 6 C(t) \cdot e^{-6 t} \]
+
+Dosadíme do původní rovnice a vyjádříme C(t):
+
+\[ 5(C(t)' \cdot e^{-6 t} - 6 C(t) \cdot e^{-6 t}) + 30(C(t) \cdot e^{-6 t}) = 35 \]
+\[ 5C(t)' \cdot e^{-6 t} - 30C(t) \cdot e^{-6 t} + 30C(t) \cdot e^{-6 t} = 35 \]
+\[ 5C(t)' \cdot e^{-6 t} = 35 \]
+\[ C(t)' = \frac{7}{e^{-6 t}} \]
+\[ C(t) = \int \frac{7}{e^{-6 t}} dt = \frac{7e^{-6 t}}{6} + K\]
+
+Dosadíme do očekávané rovnice:
+
+\[ i_{L}(t) = e^{-6 t} \cdot \left(\frac{7e^{-6 t}}{6} + K \right)\]
+
+\textbf{Krok 3:} Vypočítáme K pomocí počáteční podmínky \(i_{L}(0) = 14A\) a vypočteme \(i_{L}\): 
+
+\[ 14 = e^{-6 \cdot 0} \cdot \left(\frac{7e^{-6 \cdot 0}}{6} + K \right) \]
+\[ 14 = \frac{7}{6} + K \]
+\[ K = \frac{77}{6} \]
+
+Dosazením K do očekávané rovnice dostaneme výslednou rovnici pro \(i_{L}(t)\):
+\[ i_{L}(t) = e^{-6 t} \cdot \frac{7e^{-6 t} + 77}{6} = \frac{7 + 77e^{6 t}}{6e^{12 t}}\]
+
+\textbf{Krok 4:} Provedeme kontrolu výpočtu dosazením nulového času do výsledné rovnice:
+
+\[ i_{L}(0) = \frac{7 + 77e^{6 \cdot 0}}{6e^{12 \cdot 0}} = \frac{84}{6} = 14 A\]

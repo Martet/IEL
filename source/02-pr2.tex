@@ -1,0 +1,104 @@
+\section{Příklad 2}
+% Jako parametr zadejte skupinu (A-H)
+\druhyZadani{B}
+
+\textbf{Krok 1:} Zkratujeme zdroj a odstraníme rezistor R\textsubscript{3}, určíme odpor zbytku obvodu vzhledem ke svorkám odstraněného rezistoru R\textsubscript{i}.
+
+\begin{figure}[H]
+\centering
+\label{fig:2_1}
+\begin{circuitikz} \draw
+to[short, *-] (0,3)
+to[R, l_=$R_{1}$, -o] (3,3)
+node[label=$A$]{}
+to[R, l_=$R_{4}$] (6,3)
+to[R, l_=$R_{5}$, -*] (6,0)
+to[R, l_=$R_{6}$, -o] (3,0)
+node[label=$B$]{}
+to[R, l_=$R_{2}$] (0,0)
+to[short] (0,-1)
+to[short] (6,-1)
+to[short] (6,0)
+;
+\end{circuitikz}
+\end{figure}
+
+Překreslíme obvod aby se snáz určoval odpor:
+
+\begin{figure}[H]
+\centering
+\label{fig:2_2}
+\begin{circuitikz} \draw
+(0,5) node[label=$A$]{}
+(0,5) to[short, o-*] (1,5)
+to[short] (1,6)
+to[R, l_=$R_{4}$] (3,6)
+to[R, l_=$R_{5}$] (5,6)
+to[short] (5,5)
+(1,5) to[short] (1,4)
+to[R, l_=$R_{1}$] (5,4)
+to[short, -*] (5,5)
+to[short, -*] (6,5)
+to[short] (6,6)
+to[R, l_=$R_{6}$] (8,6)
+to[short] (8,5)
+(6,5) to[short] (6,4)
+to[R, l_=$R_{2}$] (8,4)
+to[short, -*] (8,5)
+to[short] (9,5)
+to[short] (9,3)
+to[short, -o] (0,3)
+node[label=$B$]{}
+;
+\end{circuitikz}
+\end{figure}
+
+Určíme R\textsubscript{i} pomocí vzorců pro paralelní a sériové zapojení rezistorů:
+
+\[ R_{i} = \frac{(R_{4} + R_{5}) \cdot R_{1}}{R_{1} + R_{4} + R_{5}} + \frac{R_{2} \cdot R_{6}}{R_{2} + R_{6}} = \frac{(220 + 570) \cdot 50}{50 + 220 + 570} + \frac{310 \cdot 200}{310 + 200} = 168,592437\Omega \]
+
+\newpage
+\textbf{Krok 2:} Nyní určíme napětí U\textsubscript{i} mezi svorkami A a B:
+
+\begin{figure}[H]
+\centering
+\label{fig:2_3}
+\begin{circuitikz} \draw
+to[short, *-] (0,3)
+to[R, l_=$R_{1}$, v^=$U_{R1}$, -o] (3,3)
+node[label=$A$]{}
+to[R, l_=$R_{4}$] (6,3)
+to[R, l_=$R_{5}$, -*] (6,0)
+to[R, l_=$R_{6}$, -o] (3,0)
+node[label=$B$]{}
+(0,0) to[R, l_=$R_{2}$, v^=$U_{R2}$] (3,0)
+(0,0) to[short] (0,-1)
+to[dcvsource, v_=U] (6,-1)
+to[short] (6,0)
+;
+\end{circuitikz}
+\end{figure}
+
+U\textsubscript{i} můžeme vypočíst jako rozdíl napětí U\textsubscript{R1} a U\textsubscript{R2}:
+
+\[ U_{R1} = U \cdot \frac{R_{1}}{R_{1} + R_{4} + R_{5}} = 100 \cdot \frac{50}{50 + 220 + 570} = 5,952381V\]
+\[ U_{R2} = U \cdot \frac{R_{2}}{R_{2} + R_{6}} = 100 \cdot \frac{310}{310 + 200} = 60,784314V \]
+
+\[ U_{i} = U_{R2} - U_{R1} = 60,784314 - 5,952381 = 54,831933V \]
+
+\textbf{Krok 3:} Sestavíme náhradní obvod a dopočteme U\textsubscript{R3} a I\textsubscript{R3}:
+
+\begin{figure}[H]
+\centering
+\label{fig:2_4}
+\begin{circuitikz} \draw
+(0,3) to[dcvsource, v_=$U_{i}$] (0,0)
+(0,3) to[R, l_=$R_{i}$] (3,3)
+to[R, l_=$R_{3}$, v^=$U_{R3}$, i_=$I_{R3}$] (3,0)
+to[short] (0,0)
+;
+\end{circuitikz}
+\end{figure}
+
+\[ I_{R3} = \frac{U_{i}}{R_{i} + R_{3}} = \frac{54,831933}{168,592437 + 610} = 0,070424436A \]
+\[ U_{R3} = I_{R3} \cdot R_{3} = 0,070424436 \cdot 610 = 42,958906V \]

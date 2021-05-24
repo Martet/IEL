@@ -1,0 +1,150 @@
+\section{Příklad 1}
+% Jako parametr zadejte skupinu (A-H)
+\prvniZadani{H}
+
+\textbf{Krok 1:} Vyjádříme odpor R\textsubscript{34} jako paralelní zapojení odporů R\textsubscript{4} a R\textsubscript{4}, zároveň sečteme sériově zapojené zdroje napětí:
+\[ R_{34}= \frac{R_{3}\cdot R_{4}}{R_{3}+R_{4}}=\frac{260\cdot 310}{260+310}=141,4035088 \Omega \]
+
+\[ U = U_{1} + U_{2} = 135 + 80 = 215V \]
+
+\begin{figure}[H]
+\centering
+\label{fig:1_1}
+
+\begin{circuitikz} \draw
+(0,3) to[dcvsource, v_=U] (0,0)
+(0,3) to[short, -*] (2,3)
+(2,3) to[R, l_=$R_{1}$] (5,3)
+(2,3) to[R, l_=$R_{2}$] (2,0)
+to[R, l_=$R_{34}$] (5,0)
+to[R, l_=$R_{5}$, *-] (5,3)
+to[short, *-] (8,3)
+to[R, l_=$R_{7}$] (8,0)
+(5,0) to[R, l_=$R_{6}$, i_=$I_{R6}$, v^=$U_{R6}$, -*] (8,0)
+to[short] (8,-2)
+to[short] (5,-2)
+to[R, l_=$R_{8}$] (2,-2)
+to[short] (0,-2)
+to[short] (0,0)
+;
+\end{circuitikz}
+\end{figure}
+
+\textbf{Krok 2:} Vyjádříme odpor R\textsubscript{234} pomocí sériového zapojení rezistorů R\textsubscript{2} a R\textsubscript{34}:
+
+\[ R_{234} = R_{2} + R_{34} = 141,4035088 + 600 = 741,4035088\Omega \]
+
+\begin{figure}[H]
+\centering
+\label{fig:1_2}
+\begin{circuitikz} \draw
+(0,3) to[dcvsource, v_=U] (0,0)
+(0,3) to[short, -*] (2,3)
+(2,3) to[R, l_=$R_{1}$] (5,3)
+(2,3) to[short] (2,0)
+to[R, l_=$R_{234}$] (5,0)
+to[R, l_=$R_{5}$, *-] (5,3)
+to[short, *-] (8,3)
+to[R, l_=$R_{7}$] (8,0)
+(5,0) to[R, l_=$R_{6}$, i_=$I_{R6}$, v^=$U_{R6}$, -*] (8,0)
+to[short] (8,-2)
+to[short] (5,-2)
+to[R, l_=$R_{8}$] (2,-2)
+to[short] (0,-2)
+to[short] (0,0)
+;
+\end{circuitikz}
+\end{figure}
+
+\textbf{Krok 3:} Převedeme zapojení rezistorů R\textsubscript{1}, R\textsubscript{234} a R\textsubscript{5} z trojúhelníku na hvězdu:
+
+\[ R_{A} = \frac{R_{1} \cdot R_{234}}{R_{1} + R_{234} + R_{5}} = \frac{680 \cdot 741,4035088}{680 + 741,4035088 + 575} = 252,5313063\Omega \]
+\[ R_{B} = \frac{R_{1} \cdot R_{5}}{R_{1} + R_{234} + R_{5}} = \frac{680 \cdot 575}{680 + 741,4035088 + 575} = 195,8521903\Omega\]
+\[ R_{C} = \frac{R_{234} \cdot R_{5}}{R_{1} + R_{234} + R_{5}} = \frac{741,4035088 \cdot 575}{680 + 741,4035088 + 575} = 213,5375017\Omega\]
+
+\begin{figure}[H]
+\centering
+\label{fig:1_3}
+\begin{circuitikz} \draw
+(0,3) to[dcvsource, v_=U] (0,0)
+(0,3) to[R, l_=$R_{A}$, -*] (3,3)
+to[R, l^=$R_{B}$] (6,4)
+to[R, l_=$R_{7}$] (9,4)
+to[short, -*] (9,2)
+(3,3) to[R, l_=$R_{C}$] (6,2)
+to[R, l_=$R_{6}$, i_=$I_{R6}$, v^=$U_{R6}$] (9,2)
+to[short] (9,0)
+to[R, l_=$R_{8}$] (0,0)
+;
+\end{circuitikz}
+\end{figure}
+
+\textbf{Krok 4:} Vyjádříme odpor R\textsubscript{B7} jako sériově zapojené rezistory R\textsubscript{B} a R\textsubscript{7}, vyjádříme odpor R\textsubscript{C6} jako sériově zapojené rezistory R\textsubscript{C} a R\textsubscript{6}:
+
+\[ R_{B7} = R_{B} + R_{7} = 195,8521903 + 355 = 550,8521903\Omega \]
+\[ R_{C6} = R_{C} + R_{6} = 213,5375017 + 870 = 1083,5375017\Omega \]
+
+\begin{figure}[H]
+\centering
+\label{fig:1_4}
+\begin{circuitikz} \draw
+(0,3) to[dcvsource, v_=U] (0,0)
+(0,3) to[R, l_=$R_{A}$, -*] (3,3)
+to[short] (3,4)
+to[R, l_=$R_{B7}$] (6,4)
+to[short] (6,0)
+(3,3) to[short] (3,2)
+to[R, l_=$R_{C6}$, -*] (6,2)
+(6,0) to[R, l_=$R_{8}$] (0,0)
+;
+\end{circuitikz}
+\end{figure}
+
+\textbf{Krok 5:} Vyjádříme odpor R\textsubscript{BC67} jako paralelní zapojení rezistorů R\textsubscript{B7} a R\textsubscript{C6}:
+
+\[ R_{BC67} = \frac{R_{B7} \cdot R_{C6}}{R_{B7} + R_{C6}} = \frac{550,8521903 \cdot 1083,5375017}{550,8521903 + 1083,5375017} = 365,1938146\Omega \]
+
+\begin{figure}[H]
+\centering
+\label{fig:1_5}
+\begin{circuitikz} \draw
+(0,3) to[dcvsource, v_=U] (0,0)
+(0,3) to[R, l_=$R_{A}$] (3,3)
+to[R, l_=$R_{BC67}$] (6,3)
+to[short] (6,0)
+to[R, l_=$R_{8}$] (0,0)
+;
+\end{circuitikz}
+\end{figure}
+
+\textbf{Krok 6:} Vyjádříme R\textsubscript{EKV} jako sériové zapojení zbývajících rezistorů:
+
+\[ R_{EKV} = R_{A} + R_{BC67} + R_{8} = 252,5313063 + 365,1938146 + 265 = 882,7251209\Omega \]
+
+\begin{figure}[H]
+\centering
+\label{fig:1_6}
+\begin{circuitikz} \draw
+(0,3) to[dcvsource, v_=U] (0,0)
+(3,0) to[short, i_=$I$] (0,0)
+(3,0) to[R, l_=$R_{EKV}$] (3,3)
+to[short] (0,3)
+;
+\end{circuitikz}
+\end{figure}
+
+\textbf{Krok 7:} Pomocí ohmova zákona vypočteme celkový proud procházející obvodem I:
+
+\[ I = \frac{U}{R} = \frac{215}{882,7251209} = 0,2435639A \]
+
+\textbf{Krok 8:} Nyní spočteme napětí na odporu R\textsubscript{BC67} z kroku 5:
+
+\[ U_{BC67} = U \cdot \frac{R_{BC67}}{R_{EKV}} = 215 \cdot \frac{365,1938146}{882,7251209} = 88,94804V \]
+
+Nyní můžeme vypočíst proud I\textsubscript{R6}:
+
+\[ I_{R6} = \frac{U_{BC67}}{R_{BC67}} = \frac{88,94804}{1083,5375017} = 0,0820904A \]
+
+\textbf{Krok 9:} Ve všech větvích paralelně zapojeného obvodu je napětí stejné, tedy napětí spodní větve obvodu z kroku 3 je rovno U\textsubscript{BC67}. Stačí tedy spočítat napětí na odporu R\textsubscript{6}:
+
+\[ U_{R6} = U_{BC67} \cdot \frac{R_{6}}{R_{C} + R_{6}} = 88,94804 \cdot \frac{870}{213,5375017 + 870} = 71,41865849V \]
